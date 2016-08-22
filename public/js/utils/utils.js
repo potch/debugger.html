@@ -172,6 +172,18 @@ function updateObj<T>(obj: T, fields: $Shape<T>) : T {
   return Object.assign({}, obj, fields);
 }
 
+function throttle(func: any, ms: number) {
+  let timeout;
+  return (...args: any) => {
+    if (!timeout) {
+      timeout = setTimeout(() => {
+        func(...args);
+        timeout = null;
+      }, ms);
+    }
+  };
+}
+
 module.exports = {
   asPaused,
   handleError,
@@ -186,5 +198,6 @@ module.exports = {
   mapObject,
   compose,
   log,
-  updateObj
+  updateObj,
+  throttle
 };
